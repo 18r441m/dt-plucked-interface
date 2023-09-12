@@ -1,1 +1,1 @@
-![duckie](image.jpeg "Duckie")
+![duckie](duck.jpeg "Duckie")
