@@ -1,0 +1,7 @@
+<launch>
+    <arg name="veh" doc="Name of vehicle. ex: megaman"/>
+    <arg name="node_name" default="wheels_driver_node"/>
+
+    <node ns="$(arg veh)"  pkg="wheels_driver" type="$(arg node_name).py" name="$(arg node_name)"
+          output="screen" required="true" />
+</launch>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="veh" value="duckie"/>
+    <group>
+        <include file="$(find wheels_driver)/launch/wheels_driver_node.launch">
+            <arg name="veh" value="$(arg veh)"/>
+        </include>
+    </group>
+
+    <group>
+        <include file="$(find led_driver)/launch/led_driver_node.launch">
+            <arg name="veh" value="$(arg veh)"/>
+        </include>
+    </group>
+    <group>
+        <remap from="left_wheel_encoder_node/wheels_cmd_executed"
+               to="wheels_driver_node/wheels_cmd_executed"/>
+        <include file="$(find wheel_encoder)/launch/wheel_encoder_node.launch">
+            <arg name="veh" value="$(arg veh)"/>
+            <arg name="wheel" value="left"/>
+            <arg name="param_file_name" value="left_wheel"/>
+        </include>
+
+        <remap from="right_wheel_encoder_node/wheels_cmd_executed"
+               to="wheels_driver_node/wheels_cmd_executed"/>
+        <include file="$(find wheel_encoder)/launch/wheel_encoder_node.launch">
+            <arg name="veh" value="$(arg veh)"/>
+            <arg name="wheel" value="right"/>
+            <arg name="param_file_name" value="right_wheel"/>
+        </include>
+    </group>
+</launch>
