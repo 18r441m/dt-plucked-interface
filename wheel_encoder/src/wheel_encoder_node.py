@@ -44,44 +44,10 @@ class WheelEncoderNode:
         self._configuration = rospy.get_param("~configuration")
         self._publish_frequency = 1
 
-        # try using custom calibration file
-        calib_file = os.path.join(
-            "/data/config/calibrations/encoder",
-            f"{self._configuration}/{self._veh}.yaml",
-        )
-        try:
-            with open(calib_file, "r") as f:
-                calib_data = yaml.safe_load(f)
-            custom_resolution = int(calib_data["resolution"])
-            rospy.set_param("~resolution", custom_resolution)
+        if rospy.has_param('~custom_resolution'):
+            custom_resolution = rospy.get_param('~custom_resolution')
             self._resolution = custom_resolution
-            print(
-                (
-                    f"With calibration file - {calib_file}, "
-                    f"use custom encoder resolution: {self._resolution}"
-                )
-            )
-        except FileNotFoundError:
-            print(
-                (f"No custom encoder calibration found at: {calib_file}. " "Using default parameters.")
-            )
-        except KeyError:
-            print(
-                (
-                    "No valid field 'resolution' found in "
-                    f"encoder calibration file at: {calib_file}. "
-                    "Using default parameters."
-                )
-            )
-        except ValueError:
-            print(
-                (
-                    "No valid integer 'resolution' value found in "
-                    f"encoder calibration file at: {calib_file}. "
-                    "Using default parameters."
-                )
-            )
-        # throw exceptions for other situations
+            rospy.set_param("~resolution", custom_resolution)
 
         # tick storage
         self._tick = 0

@@ -2,6 +2,7 @@
     <arg name="veh" doc="Name of vehicle. ex: megaman"/>
     <arg name="wheel" doc="Unique name of the wheel (e.g., left)"/>
     <arg name="node_name" default="wheel_encoder_node"/>
+    <arg name="custom_resolution" default="135" />
     <arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman." />
 
     <group ns="$(arg veh)">
@@ -9,6 +10,7 @@
               name="$(arg wheel)_$(arg node_name)" output="screen" required="true">
             <param name="veh" type="str" value="$(arg veh)"/>
             <param name="name" type="str" value="$(arg wheel)"/>
+            <param name="custom_resolution" type="int" value="$(arg custom_resolution)"/>
             <rosparam command="load" file="$(find wheel_encoder)/config/$(arg node_name)/$(arg param_file_name).yaml"/>
         </node>
     </group>
